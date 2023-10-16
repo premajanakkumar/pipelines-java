@@ -60,4 +60,4 @@ stages:
               azureSubscription: $(azureSubscription)
               appType: webAppWindows
               appName: $(webAppName)
-              package: $(Build.ArtifactStagingDirectory)/drop/**/target/*.war
+              package: "$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)"
