@@ -55,10 +55,10 @@ stages:
         deploy:
           steps:
           - task: AzureWebApp@1
-            displayName: 'Azure Web App Deploy: demoprema1
             inputs:
-              azureSubscription: $(azureSubscription)
-              appType: webAppWindows
-              appName: $(webAppName)
+              azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
+              appType: 'webApp'
+              appName: 'demoprema1'
               package: '$(System.DefaultWorkingDirectory)/**/*.war'
+              deploymentMethod: 'auto'
           
