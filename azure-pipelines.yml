@@ -63,6 +63,4 @@ stages:
                 pwd
                 echo "$(Pipeline.Workspace)" 
                 echo "$(Build.ArtifactStagingDirectory)"
-              package: '$(Build.ArtifactStagingDirectory)/**/*.war'
-              deploymentMethod: 'auto'
-          
+              
