@@ -1,34 +1,63 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
 trigger:
 - main
 
-pool:
-  name: Default
+variables:
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-    allowBrokenSymlinks: 
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
 
-- task: CopyFiles@2
-  inputs:
-    Contents: '**/*.war'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  # Web app name
+  webAppName: 'demoprema1'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'warfile-java-new'
-    publishLocation: 'Container'
+  # Environment name
+  environmentName: 'demoprema1'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: MavenPackageAndPublishArtifacts
+    displayName: Maven Package and Publish Artifacts
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: Maven@3
+      displayName: 'Maven Package'
+      inputs:
+        mavenPomFile: 'pom.xml'
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to artifact staging directory'
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**/target/*.?(war|jar)'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+
+    - upload: $(Build.ArtifactStagingDirectory)
+      artifact: drop
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: DeployWindowsWebApp
+    displayName: Deploy Windows Web App
+    environment: $(environmentName)
+    pool:
+      vmImage: $(vmImageName)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Azure Web App Deploy: demoprema1
+            inputs:
+              azureSubscription: $(azureSubscription)
+              appType: webAppWindows
+              appName: $(webAppName)
+              package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
