@@ -59,6 +59,10 @@ stages:
               azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
               appType: 'webApp'
               appName: 'demoprema1'
+          - script: |
+                pwd
+                echo "$(Pipeline.Workspace)" 
+                echo "$(Build.ArtifactStagingDirectory)"
               package: '$(Build.ArtifactStagingDirectory)/**/*.war'
               deploymentMethod: 'auto'
           
