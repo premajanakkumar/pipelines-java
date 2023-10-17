@@ -40,7 +40,6 @@ steps:
     appType: 'webApp'
     appName: 'demoprema1'
     package: '$(System.DefaultWorkingDirectory)/**/*.war'
-    
 
   
 
