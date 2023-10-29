@@ -49,10 +49,8 @@ stages:
         definition: '13'
         buildVersionToDownload: 'latest'
         targetPath: '$(Pipeline.Workspace)'
-    - task: AzureWebApp@1
-      inputs:
-        azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
-        appType: 'webApp'
-        appName: 'demoprema1112'
-        package: '$(Pipeline.Workspace)/*.war'
+    - script: |
+         echo '$(Pipeline.Workspace)'
+         ls -ltr '$(Pipeline.Workspace)'
+      
 
