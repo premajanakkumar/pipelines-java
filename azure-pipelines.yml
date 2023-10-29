@@ -39,13 +39,15 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'container'
-      
+
+- stage: 'Deploy'
+  jobs:
+  - job: 'Deployjob' 
+    steps: 
     - task: AzureWebApp@1
       inputs:
         azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
         appType: 'webApp'
         appName: 'demoprema1112'
         package: '$(System.DefaultWorkingDirectory)/**/*.war'
-
-      
 
