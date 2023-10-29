@@ -51,6 +51,6 @@ stages:
         targetPath: '$(Pipeline.Workspace)/drop'
     - script: |
          echo '$(Pipeline.Workspace)'
-         ls -ltr '$(Pipeline.Workspace)/drop'
+         ls -lhtr '$(Pipeline.Workspace)/drop'
       
 
