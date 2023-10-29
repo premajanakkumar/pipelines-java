@@ -49,7 +49,7 @@ stages:
         buildType: 'current'
         artifactName: 'drop'
         definition: '15'
-        targetPath: '$(Pipeline.Workspace)'
+        targetPath: '$(Pipeline.Workspace)/drop'
     - task: AzureWebApp@1
       inputs:
         azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
