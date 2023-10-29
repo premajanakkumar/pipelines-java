@@ -54,5 +54,5 @@ stages:
         azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
         appType: 'webApp'
         appName: 'demoprema1112'
-        package: '$(Pipeline.Workspace)/**/*.war'
+        package: '$(Pipeline.Workspace)/*.war'
 
