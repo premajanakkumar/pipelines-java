@@ -46,10 +46,9 @@ stages:
     steps: 
     - task: DownloadPipelineArtifact@2
       inputs:
-        buildType: 'specific'
-        project: '3f55aab9-6108-4192-84d2-d7b1e109c33c'
+        buildType: 'current'
+        artifactName: 'drop'
         definition: '15'
-        buildVersionToDownload: 'latest'
         targetPath: '$(Pipeline.Workspace)'
     - task: AzureWebApp@1
       inputs:
