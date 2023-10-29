@@ -34,11 +34,6 @@ stages:
         Contents: '**/*.war'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'container'
 
 - stage: 'Deploy'
   jobs:
@@ -55,5 +50,5 @@ stages:
         azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
         appType: 'webApp'
         appName: 'demoprema1112'
-        package: '$(System.DefaultWorkingDirectory)/**/*.war'
+        package: '$(Pipeline.Workspace)/drop/**/*.war'
 
