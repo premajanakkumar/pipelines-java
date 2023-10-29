@@ -36,13 +36,15 @@ stages:
 
 
 - stage: 'Release'
+  pool:
+    vmImage: 'windows-latest'
   jobs:
   - job: 'ReleaseJob' 
     steps: 
     - task: DownloadPipelineArtifact@2
       displayName: 'Download artifact'
       inputs:
-        buildType: 'Latest'
+        buildType: 'current'
         artifactName: 'drop'
         targetPath: '$(Pipeline.Workspace)'
     - task: AzureWebApp@1
