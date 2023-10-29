@@ -35,20 +35,22 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 
-- stage: 'Deploy'
+- stage: 'Release'
   jobs:
-  - job: 'Deployjob' 
+  - job: 'ReleaseJob' 
     steps: 
     - task: DownloadPipelineArtifact@2
+      displayName: 'Download artifact'
       inputs:
-        buildType: 'current'
-        artifactName: 'drop'
+        buildType: 'specific'
+        project: '3f55aab9-6108-4192-84d2-d7b1e109c33c'
         definition: '15'
-        targetPath: '$(Pipeline.Workspace)/drop'
+        buildVersionToDownload: 'latest'
+        targetPath: '$(Pipeline.Workspace)'
     - task: AzureWebApp@1
       inputs:
         azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
         appType: 'webApp'
         appName: 'demoprema1112'
-        package: '$(Pipeline.Workspace)/drop/**/*.war'
+        package: '$(Pipeline.Workspace)/**/*.war'
 
