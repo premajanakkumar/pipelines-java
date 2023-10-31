@@ -33,24 +33,10 @@ stages:
       inputs:
         Contents: '**/*.war'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-
-- stage: 'Release'
-  pool:
-    vmImage: 'windows-latest'
-  jobs:
-  - job: 'ReleaseJob' 
-    steps: 
-   
-    - task: DownloadPipelineArtifact@2
+    - task: PublishBuildArtifacts@1
       inputs:
-        buildType: 'specific'
-        project: '3f55aab9-6108-4192-84d2-d7b1e109c33c'
-        definition: '13'
-        buildVersionToDownload: 'latest'
-        targetPath: '$(Pipeline.Workspace)/drop'
-    - script: |
-         echo '$(Pipeline.Workspace)'
-         ls -lhtr '$(Pipeline.Workspace)/drop'
-      
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
 
