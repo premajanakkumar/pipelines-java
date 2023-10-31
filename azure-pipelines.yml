@@ -46,14 +46,21 @@ stages:
   jobs:
   - job: 'ReleaseJob' 
     steps: 
-    - task: DownloadPipelineArtifact@2
+    # - task: DownloadPipelineArtifact@2
+    #   inputs:
+    #     buildType: 'current'
+    #     artifactName: 'drop'
+    #     targetPath: '$(Pipeline.Workspace)'
+    # #both above and below download tasks are same 
+    - download: current #download the artifact to the current agent machine
+      artifact: drop
+    
+    - task: AzureWebApp@1
       inputs:
-        buildType: 'current'
-        artifactName: 'drop'
-        targetPath: '$(Pipeline.Workspace)'
-    #both above and below download tasks are same 
-    # - download: current
-    #   artifact: drop
+        azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
+        appType: 'webApp'
+        appName: 'tys3'
+        package: '$(System.DefaultWorkingDirectory)/**/*.war'
    
 
   
