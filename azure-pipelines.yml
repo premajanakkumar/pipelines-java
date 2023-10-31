@@ -3,6 +3,9 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
+name: $(Date:yyyyMMdd)$(Rev:r)
+
+
 trigger:
 - main
 
@@ -18,6 +21,9 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    
+    - script: echo '$(Build.BuildNumber)'
+
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
@@ -55,12 +61,15 @@ stages:
     - download: current #download the artifact to the current agent machine
       artifact: drop
     
-    - task: AzureWebApp@1
-      inputs:
-        azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
-        appType: 'webApp'
-        appName: 'tys3'
-        package: '/home/vsts/work/1/drop/**/*.war'
+    # - task: AzureWebApp@1
+    #   inputs:
+    #     azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
+    #     appType: 'webApp'
+    #     appName: 'tys3'
+    #     package: '/home/vsts/work/1/drop/**/*.war'
+    
+    # CTL+K+U  -- un comment
+    # CTL -  / -- comment
    
 
   
