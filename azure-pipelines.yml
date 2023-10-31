@@ -60,7 +60,7 @@ stages:
         azureSubscription: 'Prema-test-subscription(545e669b-7024-4ced-a391-f9e94ce0ca8c)'
         appType: 'webApp'
         appName: 'tys3'
-        package: '$(System.DefaultWorkingDirectory)/**/*.war'
+        package: '$(Build.ArtifactStagingDirectory)/**/*.war'
    
 
   
