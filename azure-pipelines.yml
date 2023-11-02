@@ -37,7 +37,7 @@ stages:
 
     - task: CopyFiles@2
       inputs:
-        Contents: '**/*.war'
+        Contents: '**/myFunction-12345/*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: PublishPipelineArtifact@1
       inputs:
@@ -45,21 +45,21 @@ stages:
         artifact: 'drop'
         publishLocation: 'pipeline'
 
-- stage: 'DeploytoDev'
-  dependsOn: 'Build'
-  pool:
-    vmImage: 'ubuntu-latest'
-  jobs:
-  - job: 'ReleaseJob' 
-    steps: 
-    # - task: DownloadPipelineArtifact@2
-    #   inputs:
-    #     buildType: 'current'
-    #     artifactName: 'drop'
-    #     targetPath: '$(Pipeline.Workspace)'
-    # #both above and below download tasks are same 
-    - download: current #download the artifact to the current agent machine
-      artifact: drop
+# - stage: 'DeploytoDev'
+#   dependsOn: 'Build'
+#   pool:
+#     vmImage: 'ubuntu-latest'
+#   jobs:
+#   - job: 'ReleaseJob' 
+#     steps: 
+#     # - task: DownloadPipelineArtifact@2
+#     #   inputs:
+#     #     buildType: 'current'
+#     #     artifactName: 'drop'
+#     #     targetPath: '$(Pipeline.Workspace)'
+#     # #both above and below download tasks are same 
+#     - download: current #download the artifact to the current agent machine
+#       artifact: drop
     
     # - task: AzureWebApp@1
     #   inputs:
