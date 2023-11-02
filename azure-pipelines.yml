@@ -37,7 +37,7 @@ stages:
 
     - task: CopyFiles@2
       inputs:
-        Contents: '**/myFunction-12345/*'
+        Contents: '**/*.war'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: PublishPipelineArtifact@1
       inputs:
